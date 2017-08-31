@@ -8,21 +8,22 @@ Jméno: {name[0]}
 E-mail: {email[0]}
 Telefon: {phone[0]}
 Den: {day[0]}
-Čas: {from[0]} - {to[0]}
+Čas: {time[0]}
+Délka: {length[0]}
 Název: {title[0]}
 Popis: {abstract[0]}
 Veřejné: {open[0]}
 
 Výpis všech registrací je k nalezení příkazem
-/srv/www/ldform/export.py openroom2015 name email phone day from to public title abstract
+/srv/www/ldform/export.py om2016 name email phone day from length public title abstract
 """
 
 def respond(data):
     """Send e-mail notification"""
-    email = 'petr.krcmar@iinfo.cz'
-    name = 'Petr Krčmář'
+    email = 'orgs@linuxdays.cz'
+    name = 'Orgs'
     emailtext = notifytext.format_map(data)
-    subject = "LinuxDays 2015 OpenRoom požadavek"
+    subject = "LinuxDays 2016 OpenRoom požadavek"
     recipients = [(name, email)]
     sendemail(emailtext, subject, recipients)
 

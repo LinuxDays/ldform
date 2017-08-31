@@ -1,0 +1,55 @@
+Content-type: text/html; charset=UTF-8
+
+<!--#set var="titulek" value="Dotazník přednášejících" -->
+<!--#include file="/2016/hlavicka.html" -->
+
+<div class="container">
+  <h1>Dotazník přednášejících</h1>
+  <dl>
+    <dt>Jméno přednášejícího</dt>
+    <dd>{{ regdata.name[0] }}</dd>
+    <dt>E-mailová adresa</dt>
+    <dd>{{ regdata.email[0] }}</dd>
+    <dt>Telefon</dt>
+    <dd>{{ regdata.phone[0] }}</dd>
+    <dt>Ubytování</dt>
+    <dd>{{ regdata.getlist('accomodation', 'no') }}</dd>
+    <dt>Party</dt>
+    <dd>{{ regdata.getfirst('social', 'no') }}</dd>
+    <dt>Název přednášky</dt>
+    <dd>{{ regdata.title[0] }}</dd>
+  </dl>
+  <form action="/cgi-bin/ldform.py" method="post">
+  <input type="hidden" name="formid" value="pr2016">
+  <input type=hidden name="r" value="{{ regdata.regid }}">
+  <input type=hidden name="n" value="{{ regdata.nonce }}">
+  
+  {% if regdata.get('accomodation') %}
+  <h2>Ubytování</h2>
+  <p>Potvrďte prosím, že váš zájem o zajištění ubytování v <a href="http://www.masarykovakolej.cz/jedu-na-akci/navigace">Masarykově koleji</a> trvá. Volba je dostupná pouze pro ty, kteří o ubytování požádali.</p>
+  <label>
+    <input type="checkbox" name="acconfirm" value="fri"
+    {% if 'fri' not in regdata.accomodation %}disabled="1"{% endif %}
+    {% if 'fri' in regdata.acconfirm %}checked="1"{% endif %}> Potvrzuji
+    zájem o ubytování z pátka na sobotu
+  </label><br>
+  <label>
+    <input type="checkbox" name="acconfirm" value="sat"
+    {% if 'sat' not in regdata.accomodation %}disabled="1"{% endif %}
+    {% if 'sat' in regdata.acconfirm %}checked="1"{% endif %}> Potvrzuji
+    zájem o ubytování ze soboty na neděli
+  </label>
+  {% endif %}
+  <h2>Potvrzení přihlášky</h2>
+  {% if regdata.confirmed == True %}
+  <p>Vaše přihláška už je potvrzena. Děkujeme.
+  {% else %}
+  <label>
+    <input type="checkbox" name="action" value="confirm"> Potvrzuji svou účast
+  </label><br>
+  <p>Pokud některá data nesouhlasí, napište prosím organizátorům na orgs@linuxdays.cz. V opačném případě můžete formulář odeslat.</p>
+  <p>Na konferenci doražte alespoň půl hodiny před vaším vystoupením. Nahlašte se na registraci, kde dostanete stravenku a tričko. V příslušné posluchárně pro vás bude vyhrazené místo se jmenovkou v první řadě vlevo. Tam vás kontaktuje technik AVC.SH, který zařídí vše potřebné.</p>
+  <input type="submit">
+  {% endif %}
+</div>
+<!--#include file="/2016/paticka.html" -->

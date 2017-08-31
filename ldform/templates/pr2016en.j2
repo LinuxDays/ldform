@@ -1,0 +1,54 @@
+Content-type: text/html; charset=UTF-8
+
+<!--#set var="titulek" value="Presenter questionare" -->
+<!--#include file="/2016/en/header.html" -->
+
+<div class="container">
+  <h1>Presenter questionare</h1>
+  <dl>
+    <dt>Name</dt>
+    <dd>{{ regdata.name[0] }}</dd>
+    <dt>E-mail address</dt>
+    <dd>{{ regdata.email[0] }}</dd>
+    <dt>Phone</dt>
+    <dd>{{ regdata.phone[0] }}</dd>
+    <dt>Accomodation</dt>
+    <dd>{{ regdata.getlist('accomodation', 'no') }}</dd>
+    <dt>Party</dt>
+    <dd>{{ regdata.getfirst('social', 'no') }}</dd>
+    <dt>Presentation title</dt>
+    <dd>{{ regdata.title[0] }}</dd>
+  </dl>
+  <form action="/cgi-bin/ldform.py" method="post">
+  <input type="hidden" name="formid" value="pr2016">
+  <input type="hidden" name="l" value="en">
+  <input type=hidden name="r" value="{{ regdata.regid }}">
+  <input type=hidden name="n" value="{{ regdata.nonce }}">
+  
+  {% if regdata.get('accomodation') %}
+  <h2>Accomodation</h2>
+  <p>Please confirm your interrest in accomodation in <a href="http://www.masarykovakolej.cz/en/going-to-event/navigation">Masaryk Dormatory</a>. The option is avaliable only for those who asked for it.</p>
+  <label>
+    <input type="checkbox" name="acconfirm" value="fri"
+    {% if 'fri' not in regdata.accomodation %}disabled="1"{% endif %}
+    {% if 'fri' in regdata.acconfirm %}checked="1"{% endif %}> I confirm accomodation from Friday to Saturday
+  </label><br>
+  <label>
+    <input type="checkbox" name="acconfirm" value="sat"
+    {% if 'sat' not in regdata.accomodation %}disabled="1"{% endif %}
+    {% if 'sat' in regdata.acconfirm %}checked="1"{% endif %}> I confirm accomodation from Saturday to Sunday
+  </label>
+  {% endif %}
+  <h2>Talk confirmation</h2>
+  {% if regdata.confirmed == True %}
+  <p>Your talk is already confirmed. Thanks.</p>
+  {% else %}
+  <label>
+    <input type="checkbox" name="action" value="confirm"> I confirm my attendance
+  </label><br>
+  <p>In case there are some errors, please contact the orgs at linuxdays.cz. Otherwise you can submit the form.</p>
+  <p>Please arrive at least 30 minutes in advance, take your badge, T-shirt and food voucher. In the lecture hall, there will be reserved seat for you in the front left row.</p>
+  <input type="submit">
+  {% endif %}
+</div>
+<!--#include file="/2016/en/footer.html" -->
