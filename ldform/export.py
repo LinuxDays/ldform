@@ -4,6 +4,7 @@ import json
 import argparse
 import sys
 import csv
+import collections
 
 BASE_PATH = '/srv/www/lddata'
 
@@ -12,6 +13,7 @@ def export_data(formid, *args):
     """ Generate list of with values for *args. """
     global BASE_PATH
     path = os.path.join(BASE_PATH, formid)
+    Record = collections.namedtuple('Record', args, rename=True)
     for f in sorted(os.listdir(path)):
         if not f.endswith('.json'):
             continue
@@ -24,9 +26,15 @@ def export_data(formid, *args):
                 r.append(", ".join(d))
             elif type(d) is str:
                 r.append(d)
+            elif type(d) is float:
+                r.append(d)
+            elif type(d) is int:
+                r.append(d)
+            elif type(d) is bool:
+                r.append(d)
             else:
                 r.append("")
-        yield r
+        yield Record(*r)
 
 
 def write_csv(outf, data, dialect='excel-tab', heading=None):
