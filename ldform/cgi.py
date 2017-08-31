@@ -41,10 +41,12 @@ def _randstr(length=3):
 def save(data):
     global BASE_PATH
     outfname = "{}.json".format(data['regid'])
-    with open(os.path.join(BASE_PATH, data['formid'], outfname),
-              "w", encoding="utf-8") as outf:
+    outfpath = os.path.join(BASE_PATH, data['formid'], outfname)
+    outftmp = outfpath + ".tmp"
+    with open( outftmp, "w", encoding="utf-8") as outf:
         json.dump(data, outf, indent=4, sort_keys=True, ensure_ascii=False)
         outf.write('\n')
+    os.rename(outftmp, outfpath)
 
 
 def cgi_main(base_path, traceback=False):
