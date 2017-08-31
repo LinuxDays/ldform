@@ -6,7 +6,7 @@ import sys
 import csv
 import collections
 
-BASE_PATH = '/srv/www/lddata'
+BASE_PATH = '/home/ldform/lddata'
 
 
 def export_data(formid, *args):
