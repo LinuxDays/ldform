@@ -2,7 +2,7 @@
 CGI form handler used for LinuxDays web forms
 
 This is an quick and dirty hack to get the form data stored to JSON files.
-Every submission has to contain key `regid` linking to an existing directory in
+Every submission has to contain key `formid` linking to an existing directory in
 the data directory. All data from each submission is then saved into a JSON file
 named YYYYMMDD-HHMMSS-nnn.json where nnn is random nonce.
 
