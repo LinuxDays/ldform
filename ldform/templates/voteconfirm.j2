@@ -1,0 +1,32 @@
+Content-type: text/html; charset=UTF-8
+
+<!--#set var="titulek" value="Váš hlas byl uložen" -->
+<!--#include file="/2017/hlavicka.html" -->
+
+<div class="container">
+  <h1>Váš hlas byl uložen</h1>
+
+  <p>Započítali jsme tyto hlasy:</p>
+
+{% for v in votes %}
+<div class="ballot">
+  <h3>{{v.regdata.title[0]}} ({{v.regdata.name[0]}})</h3>
+  {{ v.regdata.abstract[0] | markdown }}
+  <p><strong>Vaše hodnocení: {{v.points[0]}}</strong></p>
+</div>
+{% endfor %}
+
+
+<h2>Děkujeme za hlasování</h2>
+
+<p>Unikátní identifikátor vašeho hlasovacího lístku je: <code>{{ data.regid }}</code></p>
+<p>Vyplňování ankety vám zabralo {{ data.spendtime[0] }} minut.</p>
+
+{% if '@' in data.confemail[0] %}
+<p>Odkaz na tuto stránku jsme vám poslali e-mailem.</p>
+{% endif %}
+
+<p>Můžete stránku zavřít, nebo <a href="/2017/">přejít na domovskou stránku akce</a>.</p>
+
+</div>
+<!--#include file="/2017/paticka.html" -->

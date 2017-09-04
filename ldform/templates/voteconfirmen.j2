@@ -1,0 +1,32 @@
+Content-type: text/html; charset=UTF-8
+
+<!--#set var="titulek" value="Your ballot has been recorded" -->
+<!--#include file="/2017/en/header.html" -->
+
+<div class="container">
+  <h1>Your ballot has been recorded</h1>
+
+  <p>We've recorded these votes:</p>
+
+{% for v in votes %}
+<div class="ballot">
+  <h3>{{v.regdata.title[0]}} ({{v.regdata.name[0]}})</h3>
+  {{ v.regdata.abstract[0] | markdown }}
+  <p><strong>Your vote: {{v.points[0]}}</strong></p>
+</div>
+{% endfor %}
+
+
+<h2>Thanks for voting</h2>
+
+<p>Your ballot's unique id is: <code>{{ data.regid }}</code></p>
+<p>Filling it has taken you {{ data.spendtime[0] }} minutes to complete.</p>
+
+{% if '@' in data.confemail[0] %}
+<p>We've e-mailed you a link to this page.</p>
+{% endif %}
+
+<p>You can close it, or <a href="/2017/en/">return to the LinuxDays home</a>.</p>
+
+</div>
+<!--#include file="/2017/en/footer.html" -->
